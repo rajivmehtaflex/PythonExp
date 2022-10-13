@@ -1,0 +1,15 @@
+artifact_uri: file:///workspace/PythonExp/mlflow-examples/mlruns/0/2456f3ed52764d7a875724ba5bb9196f/artifacts
+end_time: 1665667825942
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 2456f3ed52764d7a875724ba5bb9196f
+run_uuid: 2456f3ed52764d7a875724ba5bb9196f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1665667718665
+status: 3
+tags: []
+user_id: gitpod
