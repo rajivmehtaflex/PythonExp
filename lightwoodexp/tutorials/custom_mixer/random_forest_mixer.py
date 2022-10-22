@@ -1,4 +1,5 @@
 
+from asyncio.log import logger
 from lightwood.mixer import BaseMixer
 from lightwood.api.types import PredictionArguments
 from lightwood.data.encoded_ds import EncodedDs, ConcatedEncodedDs
