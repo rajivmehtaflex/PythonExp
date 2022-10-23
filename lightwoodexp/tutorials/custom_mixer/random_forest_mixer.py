@@ -24,16 +24,17 @@ class RandomForestMixer(BaseMixer):
         # We could also initialize this in `fit` if some of the parameters depend on the input data, since `fit` is called exactly once
         self.clf = RandomForestClassifier(max_depth=30)
         logger.add("/home/gitpod/out.log")
-        logger.info("If you're using Python {}, prefer {feature} of course!",sys.version , feature="f-strings")
+        # logger.info("If you're using Python {}, prefer {feature} of course!",sys.version , feature="f-strings")
 
     def fit(self, train_data: EncodedDs, dev_data: EncodedDs) -> None:
         X, Y = [], []
         # By default mixers get some train data and a bit of dev data on which to do early stopping or hyper parameter optimization. For this mixer, we don't need dev data, so we're going to concat the two in order to get more training data. Then, we're going to turn them into an sklearn friendly foramat.
-        logger.info(f'train_data --> {train_data}')
+        logger.info(f'original data --> {ConcatedEncodedDs([train_data, dev_data]).get_column_original_data("sex")}')
         for x, y in ConcatedEncodedDs([train_data, dev_data]):
-            logger.info(f'converted_train_data --> {x.tolist()}')
+            # logger.info(f'converted_train_data --> {x.tolist()}')
             X.append(x.tolist())
             Y.append(y.tolist())
+            
         self.clf.fit(X, Y)
 
     def __call__(self, ds: EncodedDs,
@@ -50,8 +51,10 @@ class RandomForestMixer(BaseMixer):
         decoded_predictions = self.target_encoder.decode(torch.Tensor(Yh))
 
         # Finally, turn the decoded predictions into a dataframe with a single column called `prediction`. This is the standard behaviour all lightwood mixers use
+        
+        # logger.info(f'decoded prediction --> {decoded_predictions} , {type(decoded_predictions)}')
         ydf = pd.DataFrame({'prediction': decoded_predictions})
-        logger.info(f'while prediction --> {ydf}')
+        # logger.info(f'while prediction --> {ydf}')
         return ydf
 
     
