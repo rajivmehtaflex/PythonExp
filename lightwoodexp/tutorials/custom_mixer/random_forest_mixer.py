@@ -34,27 +34,30 @@ class RandomForestMixer(BaseMixer):
             # logger.info(f'converted_train_data --> {x.tolist()}')
             X.append(x.tolist())
             Y.append(y.tolist())
-            
-        self.clf.fit(X, Y)
+        
+        self.X=X
+        self.Y=Y    
+        # self.clf.fit(self.X, self.Y)
 
     def __call__(self, ds: EncodedDs,
                  args: PredictionArguments = PredictionArguments()) -> pd.DataFrame:
         # Turn the data into an sklearn friendly format
-        X = []
-        for x, _ in ds:
-            logger.info(f'while prediction process--> {x.tolist()}')
-            X.append(x.tolist())
+        # X = []
+        # logger.info(f'ds length --> {len(ds)} ')
+        # for x, _ in ds:
+        #     # logger.info(f'while prediction process--> {x.tolist()}')
+        #     X.append(x.tolist())
 
-        Yh = self.clf.predict(X)
+        # Yh = self.clf.predict(X)
 
-        # Lightwood encoders are meant to decode torch tensors, so we have to cast the predictions first
-        decoded_predictions = self.target_encoder.decode(torch.Tensor(Yh))
+        # # Lightwood encoders are meant to decode torch tensors, so we have to cast the predictions first
+        # decoded_predictions = self.target_encoder.decode(torch.Tensor(Yh))
 
         # Finally, turn the decoded predictions into a dataframe with a single column called `prediction`. This is the standard behaviour all lightwood mixers use
-        
-        # logger.info(f'decoded prediction --> {decoded_predictions} , {type(decoded_predictions)}')
+        decoded_predictions=[str(i) for i in range(len(ds))]
+        logger.info(f'decoded prediction --> {decoded_predictions} , {type(decoded_predictions)}')
         ydf = pd.DataFrame({'prediction': decoded_predictions})
-        # logger.info(f'while prediction --> {ydf}')
+        # logger.info(f'while prediction --> {len(ydf)}')
         return ydf
 
     
