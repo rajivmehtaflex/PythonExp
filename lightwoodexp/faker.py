@@ -1,4 +1,3 @@
-%%writefile faker.py
 
 from lightwood.mixer import BaseMixer
 from lightwood.api.types import PredictionArguments
@@ -48,7 +47,7 @@ class Faker(BaseMixer):
         #     X.append(x.tolist())
 
         # Yh = self.clf.predict(X)
-
+        logger.info(f'original data --> {ConcatedEncodedDs([ds]).get_column_original_data("reviewText")}')
         # # Lightwood encoders are meant to decode torch tensors, so we have to cast the predictions first
         # decoded_predictions = self.target_encoder.decode(torch.Tensor(Yh))
 
