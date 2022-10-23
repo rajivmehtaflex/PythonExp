@@ -1,15 +1,15 @@
 
-from asyncio.log import logger
 from lightwood.mixer import BaseMixer
 from lightwood.api.types import PredictionArguments
 from lightwood.data.encoded_ds import EncodedDs, ConcatedEncodedDs
 from lightwood import dtype
 from lightwood.encoder import BaseEncoder
+from loguru import logger
 
 import torch
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-
+import sys
 
 class RandomForestMixer(BaseMixer):
     clf: RandomForestClassifier
@@ -23,11 +23,15 @@ class RandomForestMixer(BaseMixer):
 
         # We could also initialize this in `fit` if some of the parameters depend on the input data, since `fit` is called exactly once
         self.clf = RandomForestClassifier(max_depth=30)
+        logger.add("/home/gitpod/out.log")
+        logger.info("If you're using Python {}, prefer {feature} of course!",sys.version , feature="f-strings")
 
     def fit(self, train_data: EncodedDs, dev_data: EncodedDs) -> None:
         X, Y = [], []
         # By default mixers get some train data and a bit of dev data on which to do early stopping or hyper parameter optimization. For this mixer, we don't need dev data, so we're going to concat the two in order to get more training data. Then, we're going to turn them into an sklearn friendly foramat.
+        logger.info(f'train_data --> {train_data}')
         for x, y in ConcatedEncodedDs([train_data, dev_data]):
+            logger.info(f'converted_train_data --> {x.tolist()}')
             X.append(x.tolist())
             Y.append(y.tolist())
         self.clf.fit(X, Y)
@@ -37,6 +41,7 @@ class RandomForestMixer(BaseMixer):
         # Turn the data into an sklearn friendly format
         X = []
         for x, _ in ds:
+            logger.info(f'while prediction process--> {x.tolist()}')
             X.append(x.tolist())
 
         Yh = self.clf.predict(X)
@@ -46,7 +51,7 @@ class RandomForestMixer(BaseMixer):
 
         # Finally, turn the decoded predictions into a dataframe with a single column called `prediction`. This is the standard behaviour all lightwood mixers use
         ydf = pd.DataFrame({'prediction': decoded_predictions})
-
+        logger.info(f'while prediction --> {ydf}')
         return ydf
 
     
