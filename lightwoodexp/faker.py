@@ -17,6 +17,7 @@ class Faker(BaseMixer):
     def __init__(self, stop_after: int, dtype_dict: dict, target: str, target_encoder: BaseEncoder):
         super().__init__(stop_after)
         self.target_encoder = target_encoder
+        self.stable=True
         # Throw in case someone tries to use this for a problem that's not classification, I'd fail anyway, but this way the error message is more intuitive
         if dtype_dict[target] not in (dtype.categorical, dtype.binary):
             raise Exception(f'This mixer can only be used for classification problems! Got target dtype {dtype_dict[target]} instead!')
@@ -29,7 +30,7 @@ class Faker(BaseMixer):
     def fit(self, train_data: EncodedDs, dev_data: EncodedDs) -> None:
         X, Y = [], []
         # By default mixers get some train data and a bit of dev data on which to do early stopping or hyper parameter optimization. For this mixer, we don't need dev data, so we're going to concat the two in order to get more training data. Then, we're going to turn them into an sklearn friendly foramat.
-        logger.info(f'original data --> {ConcatedEncodedDs([train_data, dev_data]).get_column_original_data("reviewText")}')
+        logger.info(f'original data --> {ConcatedEncodedDs([train_data, dev_data]).get_column_original_data("reviewtext")}')
         for x, y in ConcatedEncodedDs([train_data, dev_data]):
             # logger.info(f'converted_train_data --> {x.tolist()}')
             X.append(x.tolist())
@@ -47,7 +48,7 @@ class Faker(BaseMixer):
         #     X.append(x.tolist())
 
         # Yh = self.clf.predict(X)
-        logger.info(f'original data --> {ConcatedEncodedDs([ds]).get_column_original_data("reviewText")}')
+        logger.info(f'original data --> {ConcatedEncodedDs([ds]).get_column_original_data("reviewtext")}')
         # # Lightwood encoders are meant to decode torch tensors, so we have to cast the predictions first
         # decoded_predictions = self.target_encoder.decode(torch.Tensor(Yh))
 
