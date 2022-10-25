@@ -14,3 +14,14 @@ installenv:
 	python -m pip install faiss-cpu sentence-transformers
 	python -m pip install pandas numpy matplotlib
 	python -m pip install git+https://github.com/neuml/codequestion
+
+installp311:
+	sudo apt install software-properties-common
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install python3.11
+	python3.11
+
+configp311:
+	sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+	sudo apt install python3.11-dev python3.11-venv python3.11-distutils python3.11-gdbm python3.11-tk python3.11-lib2to3
