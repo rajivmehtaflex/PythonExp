@@ -47,19 +47,11 @@ class FetchDB(BaseMixer):
         decoded_predictions: List[object] = []
         tags = ['neutral', 'positive', 'negative']
         logger.info(f'data -->{ConcatedEncodedDs([ds]).get_column_original_data("text").tolist()}') 
-        # for data in ConcatedEncodedDs([ds]).get_column_original_data("text").tolist():
         
         for text in ConcatedEncodedDs([ds]).get_column_original_data("text").tolist():
             result=tags[self.labels(text, tags)[0][0]] 
             logger.info(f'result -->{result}')
             decoded_predictions.extend([result])
-            
-            
-            
-        # for X, _ in ds:
-        #     decoded_prediction = self.target_encoder.decode(torch.unsqueeze(X, 0))
-        #     logger.info(f'prediction -->{decoded_prediction}')
-        #     decoded_predictions.extend(decoded_prediction)
 
         ydf = pd.DataFrame({"prediction": decoded_predictions})
         return ydf
