@@ -1,0 +1,15 @@
+artifact_uri: file:///workspace/PythonExp/mlflow-examples/sklearn_elasticnet_wine/mlruns/0/dc46556173d04e80a7739918181231b6/artifacts
+end_time: 1665667164743
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: dc46556173d04e80a7739918181231b6
+run_uuid: dc46556173d04e80a7739918181231b6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1665667162119
+status: 3
+tags: []
+user_id: gitpod
