@@ -2,10 +2,13 @@ echomessage:
 	echo hello
 
 installintelpython:
-    conda update conda
+    conda deactivate
+    conda update conda -y
     conda config --add channels intel
-    conda create -n uiexp intelpython3_full python=3.8 -y
-    conda init bash
+    conda create -n uiexp intelpython3_full python=3.7 -y
+	conda activate uiexp
+    conda install scikit-learn-intelex install intel-aikit-pytorch -y
+	pip install matplotlib
 
 installconda:
 	wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.12.0-Linux-x86_64.sh
