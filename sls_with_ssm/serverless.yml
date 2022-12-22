@@ -1,0 +1,21 @@
+org: rajivmehtaflex
+app: gsqswithpython
+service: aws-ssm-demo
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  iam:
+      role:
+        statements:
+        - Effect: Allow
+          Action:
+            - ssm:Describe*
+            - ssm:Get*
+            - ssm:List*
+          Resource: "*"    
+functions:
+  hello:
+    handler: handler.hello
