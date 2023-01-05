@@ -1,0 +1,25 @@
+04 - LR
+05 - Multiple Liner
+06 - LR-Polynomial
+07 - SVM Regression
+08-DT Regression 
+09-Random Forest Regression
+10 - LR Metrics
+12 - LR
+13 -KNN
+14 - SVM
+16 - Naive Bayes Theorem Classifier
+18 - Decision Tree Classifier
+20 - Decision Tree Classifier by gini index
+23 - Random Forest Classifer 
+25 - Evaluation metrics for classification
+27 - K Means Clustering
+29 - K Hierarchical clustering
+32-DBSCAN
+49-PCA
+50-LDA
+51- KPCA
+52- K Fold cross validation
+53- K Fold cross validation
+54-K Fold cross validation
+55-XGBoost
